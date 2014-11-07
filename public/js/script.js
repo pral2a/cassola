@@ -24,9 +24,9 @@ jQuery(document).ready(function ($) {
 
     $(this).mousedown(copDeCassola);
 
-    $(this).on('touchstart', copDeCassolaTouch);
+    $('#cassola').on('touchstart', copDeCassolaTouch);
 
-    $(this).on('touchend', deixaCopTouch);
+    $('#cassola').on('touchend', deixaCopTouch);
 
     $(this).mouseup(deixaCop);
 
@@ -65,8 +65,8 @@ var pics = {
 function copDeCassolaTouch() {
     copTeu("llarg");
     $('#cullera').css({
-        'left': $(document).width()/2,
-        'top': $(document).height()/2
+        'left': "60%",
+        'bottom': "-100px"
     });
 }
 
