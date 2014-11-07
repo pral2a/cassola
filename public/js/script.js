@@ -22,8 +22,6 @@ jQuery(document).ready(function ($) {
 
     $(this).mousedown(copDeCassola);
 
-    $(this).mousedown(copDeCassola);
-
     $('#cassola').on('touchstart', copDeCassolaTouch);
 
     $('#cassola').on('touchend', deixaCopTouch);
