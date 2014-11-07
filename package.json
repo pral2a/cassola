@@ -1,0 +1,19 @@
+{
+  "name": "cassola",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pral2a/cassola.git"
+  },
+  "author": "Mariaambaccent + Pral2a",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/pral2a/cassola/issues"
+  },
+  "homepage": "https://github.com/pral2a/cassola"
+}
