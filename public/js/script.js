@@ -11,7 +11,7 @@ jQuery(document).ready(function ($) {
 
         $('#cullera').css({
             'left': ratoli.x - 134 / 2,
-                'top': ratoli.y - 100,
+            'top': ratoli.y - 100
         });
 
     });
@@ -21,6 +21,12 @@ jQuery(document).ready(function ($) {
     $('#about').click(tanca);
 
     $(this).mousedown(copDeCassola);
+
+    $(this).mousedown(copDeCassola);
+
+    $(this).on('touchstart', copDeCassolaTouch);
+
+    $(this).on('touchend', deixaCopTouch);
 
     $(this).mouseup(deixaCop);
 
@@ -55,107 +61,124 @@ var pics = {
 }
 
 
-    function actualitzaCassoladesTeves() {
-        $('#tu-score').text(cassoladesTeves);
+
+function copDeCassolaTouch() {
+    copTeu("llarg");
+    $('#cullera').css({
+        'left': $(document).width()/2,
+        'top': $(document).height()/2
+    });
+}
+
+function deixaCopTouch() {
+    $('#cullera').css({
+        'left': "30%",
+        'bottom': "-100px"
+    });
+}
+
+
+function actualitzaCassoladesTeves() {
+    $('#tu-score').text(cassoladesTeves);
+}
+
+function actualitzaCassolades() {
+    $('#tothom-score').text(cassolades);
+}
+
+function deixaCop() {
+
+    $('#cullera').css({
+        'background-size': 'auto 100%'
+    });
+
+    $('#cassola').css({
+        'background-position': 'center top'
+    });
+
+}
+
+
+function copDeCassola() {
+
+    $('#cullera').css({
+        'background-size': 'auto 90%'
+    });
+
+    var result = isTouchingCassola();
+
+    if (result) {
+        copTeu(result);
     }
 
-    function actualitzaCassolades() {
-        $('#tothom-score').text(cassolades);
+}
+
+function copTeu(tipus) {
+
+    $('#cassola').css({
+        'background-position': 'center top -758px'
+    });
+
+
+    var msg = {
+        tipus: tipus
+    };
+
+    socket.emit('cassola pic', msg);
+
+    soPic(msg.tipus, true);
+
+    cassolades++;
+    cassoladesTeves++;
+
+    actualitzaCassoladesTeves();
+    actualitzaCassolades();
+
+}
+
+function soPic(tipus, dins) {
+    if (!dins) {
+        pics[tipus].volume(getRandom(0.2, 0.5));
+        pics[tipus].pos3d(getRandom(0, 1.0), 0, 0);
+    } else {
+        pics[tipus].volume(1.0);
+        pics[tipus].pos3d(0, 0, 0.5);
     }
+    pics[tipus].play();
+}
 
-    function deixaCop() {
+function recalculaMidesCassola() {
+    var cassolaContainer = $('#cassola');
+    cassola = {
+        x: cassolaContainer.offset().left + cassolaContainer.outerWidth() / 2,
+        y: cassolaContainer.offset().top + cassolaContainer.outerWidth() / 2 - cassolaContainer.outerHeight() / 10,
+        radiGran: cassolaContainer.outerWidth() / 2,
+        radiPetit: cassolaContainer.outerWidth() / 3
+    };
+}
 
-        $('#cullera').css({
-            'background-size': 'auto 100%'
-        });
+function isTouchingCassola(mouse, pan) {
+    var mouse = mouse || ratoli;
+    var pan = pan || cassola;
 
-        $('#cassola').css({
-            'background-position': 'center top'
-        });
 
+    if (isPointOnCircle(mouse.x, mouse.y, pan.x, pan.y, pan.radiPetit)) {
+        return "curt";
+    } else if (isPointOnCircle(mouse.x, mouse.y, pan.x, pan.y, pan.radiGran)) {
+        return "llarg";
+    } else {
+        return false;
     }
+}
 
+function isPointOnCircle(mouseX, mouseY, cassolaX, cassolaY, radiCassola) {
+    return ((mouseX - cassolaX) * (mouseX - cassolaX) + (mouseY - cassolaY) * (mouseY - cassolaY) <= radiCassola * radiCassola);
+}
 
-    function copDeCassola() {
+function tanca() {
+    $('aside').fadeToggle();
+}
 
-        $('#cullera').css({
-            'background-size': 'auto 90%'
-        });
-
-        var result = isTouchingCassola();
-
-        if (result) {
-            copTeu(result);
-        }
-
-    }
-
-    function copTeu(tipus) {
-
-        $('#cassola').css({
-            'background-position': 'center top -758px'
-        });
-
-
-        var msg = {
-            tipus: tipus
-        };
-
-        socket.emit('cassola pic', msg);
-
-        soPic(msg.tipus, true);
-
-        cassolades++;
-        cassoladesTeves++;
-
-        actualitzaCassoladesTeves();
-        actualitzaCassolades();
-
-    }
-
-    function soPic(tipus, dins) {
-        if (!dins) {
-            pics[tipus].volume(getRandom(0.2, 0.5));
-            pics[tipus].pos3d(getRandom(0, 1.0), 0, 0);
-        } else {
-            pics[tipus].volume(1.0);
-            pics[tipus].pos3d(0, 0, 0.5);
-        }
-        pics[tipus].play();
-    }
-
-    function recalculaMidesCassola() {
-        var cassolaContainer = $('#cassola');
-        cassola = {
-            x: cassolaContainer.offset().left + cassolaContainer.outerWidth() / 2,
-            y: cassolaContainer.offset().top + cassolaContainer.outerWidth() / 2 - cassolaContainer.outerHeight() / 10,
-            radiGran: cassolaContainer.outerWidth() / 2,
-            radiPetit: cassolaContainer.outerWidth() / 3
-        };
-    }
-
-    function isTouchingCassola(mouse, pan) {
-        var mouse = mouse || ratoli;
-        var pan = pan || cassola;
-
-
-        if (isPointOnCircle(mouse.x, mouse.y, pan.x, pan.y, pan.radiPetit)) {
-            return "curt";
-        } else if (isPointOnCircle(mouse.x, mouse.y, pan.x, pan.y, pan.radiGran)) {
-            return "llarg";
-        } else {
-            return false;
-        }
-    }
-
-    function isPointOnCircle(mouseX, mouseY, cassolaX, cassolaY, radiCassola) {
-        return ((mouseX - cassolaX) * (mouseX - cassolaX) + (mouseY - cassolaY) * (mouseY - cassolaY) <= radiCassola * radiCassola);
-    }
-
-    function tanca() {
-        $('aside').fadeToggle();
-    }
-
-    function getRandom(min, max) {
-        return Math.random() * (max - min) + min;
-    }
+function getRandom(min, max) {
+    return Math.random() * (max - min) + min;
+}
