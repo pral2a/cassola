@@ -1,6 +1,4 @@
 var colors = require('colors');
-
-
 var express = require('express');
 
 var app = express();
@@ -16,11 +14,14 @@ app.use(express.static(__dirname + '/public'));
 io.on('connection', function (socket) {
     cassolaires++;
     console.log(colors.bold.yellow("cassolaire connectat, ja'n som " + cassolaires));
-
+    var broadcastMsg = {
+        cassolades: cassolades
+    }
+    socket.emit('cassola pic', broadcastMsg);
     io.sockets.emit('cassolaires', cassolaires);
     socket.on('cassola pic', function (msg) {
         cassolades++;
-        console.log(colors.bold.red("pic " + cassolades + " rebut i emès...  "));
+        if (process.env.NODE_ENV != "production") console.log(colors.bold.red("pic " + cassolades + " rebut i emès...  "));
         var broadcastMsg = {
             cassolades: cassolades,
             tipus: msg.tipus
