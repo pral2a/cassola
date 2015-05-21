@@ -7,7 +7,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var cassolaires = 0;
-var cassolades = 0;
+var cassolades = 1011283;
 
 app.use(express.static(__dirname + '/public'));
 

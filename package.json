@@ -1,33 +1,39 @@
 {
-    "name": "cassola",
-    "version": "0.0.1-15",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node index.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/pral2a/cassola.git"
-    },
-    "author": "Mariaambaccent + Pral2a",
-    "license": "",
-    "bugs": {
-        "url": "https://github.com/pral2a/cassola/issues"
-    },
-    "homepage": "https://github.com/pral2a/cassola",
-    "subdomain": "cassola",
-    "domains": [
-        "cassola.cat",
-        "www.cassola.cat"
-    ],
-    "engines": {
-        "node": "0.10.x"
-    },
-    "dependencies": {
-        "express": "4.10.1",
-        "socket.io": "1.2.0",
-        "colors": "1.0.3"
-    }
+  "name": "cassola",
+  "version": "0.0.1-18",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pral2a/cassola.git"
+  },
+  "author": "Mariaambaccent + Pral2a",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/pral2a/cassola/issues"
+  },
+  "homepage": "https://github.com/pral2a/cassola",
+  "subdomain": "cassola",
+  "domains": [
+    "cassola.cat",
+    "www.cassola.cat"
+  ],
+  "engines": {
+    "node": "0.10.x"
+  },
+  "dependencies": {
+    "express": "4.10.1",
+    "socket.io": "1.2.0",
+    "colors": "1.0.3"
+  },
+  "os": "sunos",
+  "bundledDependencies": [
+    "colors",
+    "express",
+    "socket.io"
+  ]
 }
