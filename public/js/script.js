@@ -45,7 +45,7 @@ jQuery(document).ready(function ($) {
 
 var cassola;
 var ratoli;
-var socket = io();
+var socket = io.connect('wss://ws.cassola.cat'); // var socket = io.connect(); //develop
 var cassolades = 0;
 var cassoladesTeves = 0;
 

@@ -7,13 +7,13 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var cassolaires = 0;
-var cassolades = 1011283;
+var cassolades = 0;
 
-app.use(express.static(__dirname + '/public'));
+if (process.env.NODE_ENV != "production") app.use(express.static(__dirname + '/public'));
 
 io.on('connection', function (socket) {
     cassolaires++;
-    console.log(colors.bold.yellow("cassolaire connectat, ja'n som " + cassolaires));
+     if (process.env.NODE_ENV != "production") console.log(colors.bold.yellow("cassolaire connectat, ja'n som " + cassolaires));
     var broadcastMsg = {
         cassolades: cassolades
     }

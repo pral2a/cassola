@@ -1,0 +1,5 @@
+check process cassola with pidfile "/home/deployer/apps/cassola.pid"
+	start program = "/etc/init.d/cassola start"
+   	stop program = "/etc/init.d/cassola stop"
+ 	if failed port 3000 type tcp then restart
+  	if 5 restarts within 5 cycles then timeout
